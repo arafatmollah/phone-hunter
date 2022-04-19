@@ -12,7 +12,7 @@ const displaySearch = phone => {
     const cardGroup = document.getElementById('card-row');
     cardGroup.textContent = '';
     phone.forEach(phones => {
-        console.log(phones);
+       console.log(phones.slug);
         
         const div = document.createElement('div');
         div.classList.add('col');
@@ -22,14 +22,35 @@ const displaySearch = phone => {
         <p class="text-danger">${phones.brand}</p>
           <h5 class="card-title">${phones.phone_name}</h5>
           <p class="card-text"></p>
-          <button class="btn btn-danger">More Details</button>
+          <button onclick="moreDetails('${phones.slug}')" class="btn btn-danger">More Details</button>
         </div>
       </div>`
         cardGroup.appendChild(div)
     })
 }
 
-// const moreDetails = details => {
-//     const url = `https://openapi.programming-hero.com/api/phone/${details.slug}`;
-//     console.log(url)
-// }
+const moreDetails = details => {
+    // console.log(details)
+    const url = `https://openapi.programming-hero.com/api/phone/${details}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data =>displayDetails(data));
+}
+const displayDetails = info => {
+    console.log(info.data.mainFeatures.storage);
+    console.log(info.data.mainFeatures.displaySize);
+    console.log(info.data.slug);
+    console.log(info.data.releaseDate);
+    const showDetails = document.getElementById('details');
+    showDetails.innerHTML=`<div class="col-6">
+
+<img src="${info.data.image}">
+    </div>
+    <div class="col-6">
+    <p>Storage: ${info.data.mainFeatures.storage}</p>
+    <p>ReleaseDate: ${info.data.releaseDate}</p>
+    <p>Display: ${info.data.mainFeatures.displaySize}</p>
+    </div>`
+}
+
+
