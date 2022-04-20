@@ -2,17 +2,29 @@ const search = () => {
     const searchInput = document.getElementById('search-input');
     const searchValue = searchInput.value;
     searchInput.value = '';
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
-    console.log(url)
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displaySearch(data.data));
+    
+    if (searchValue == '') {
+        console.log('nothing in this websute')
+        const show = document.getElementById('card-row');
+        //const createDiv = document.createElement('div');
+        show.innerHTML = `<p class='text-center text-warning'>Nothing is here</p>`;
+        //show.appendChild(div)
+    }
+    else {
+        const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displaySearch(data.data));
+    }
+   
 }
+
+
 const displaySearch = phone => {
     const cardGroup = document.getElementById('card-row');
     cardGroup.textContent = '';
     phone.forEach(phones => {
-       console.log(phones.slug);
+       //console.log(phones);
         
         const div = document.createElement('div');
         div.classList.add('col');
@@ -42,15 +54,34 @@ const displayDetails = info => {
     console.log(info.data.slug);
     console.log(info.data.releaseDate);
     const showDetails = document.getElementById('details');
-    showDetails.innerHTML=`<div class="col-6">
+    showDetails.innerHTML = `<div class="col-6">
 
 <img src="${info.data.image}">
     </div>
     <div class="col-6">
     <p>Storage: ${info.data.mainFeatures.storage}</p>
-    <p>ReleaseDate: ${info.data.releaseDate}</p>
+    <p>Storage: ${info.data.mainFeatures.chipSet}</p>
+    <p>Storage: ${info.data.mainFeatures.memory}</p>
     <p>Display: ${info.data.mainFeatures.displaySize}</p>
     </div>`
+    const details = document.getElementById('more-details');
+    details.classList.add('div');
+    if (info.data.releaseDate == '') {
+        details.innerHTML = `
+    <h3 class="text-center text-danger">No date Found</h3>
+  `
+    }
+    else {
+        details.innerHTML = `
+    <p>${info.data.releaseDate}</p>
+  `
+    }
+    
 }
+
+const showDetails = () => {
+    
+}
+
 
 
