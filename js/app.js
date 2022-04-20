@@ -22,8 +22,9 @@ const search = () => {
 const displaySearch = phone => {
     const cardGroup = document.getElementById('card-row');
     cardGroup.textContent = '';
+
+    
     phone.forEach(phones => {
-        
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML=`<div class="card text-center border-0 shadow p-3 mb-5 bg-body rounded">
