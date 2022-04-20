@@ -1,3 +1,4 @@
+//search phone_name
 const search = () => {
     const searchInput = document.getElementById('search-input');
     const searchValue = searchInput.value;
@@ -6,9 +7,7 @@ const search = () => {
     if (searchValue == '') {
         console.log('nothing in this websute')
         const show = document.getElementById('card-row');
-        //const createDiv = document.createElement('div');
-        show.innerHTML = `<p class='text-center text-warning'>Nothing is here</p>`;
-        //show.appendChild(div)
+        show.innerHTML = `<h2 class='text-center text-warning'>Nothing is here</h2>`;
     }
     else {
         const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`;
@@ -19,12 +18,11 @@ const search = () => {
    
 }
 
-
+//display result
 const displaySearch = phone => {
     const cardGroup = document.getElementById('card-row');
     cardGroup.textContent = '';
     phone.forEach(phones => {
-       //console.log(phones);
         
         const div = document.createElement('div');
         div.classList.add('col');
@@ -34,15 +32,14 @@ const displaySearch = phone => {
         <p class="text-danger">${phones.brand}</p>
           <h5 class="card-title">${phones.phone_name}</h5>
           <p class="card-text"></p>
-          <button onclick="moreDetails('${phones.slug}')" class="btn btn-danger">More Details</button>
+          <button onclick="moreDetails('${phones.slug}')" class="btn btn-success">Details</button>
         </div>
       </div>`
         cardGroup.appendChild(div)
     })
 }
-
+// details of the phone 
 const moreDetails = details => {
-    // console.log(details)
     const url = `https://openapi.programming-hero.com/api/phone/${details}`;
     fetch(url)
         .then(res => res.json())
@@ -58,30 +55,36 @@ const displayDetails = info => {
 <img src="${info.data.image}">
     </div>
     <div class="col-6">
-    <p>Storage: ${info.data.mainFeatures.storage}</p>
-    <p>Storage: ${info.data.mainFeatures.chipSet}</p>
-    <p>Storage: ${info.data.mainFeatures.memory}</p>
-    <p>Display: ${info.data.mainFeatures.displaySize}</p>
+    <p><span class="text-secondary">Storage : </span> ${info.data.mainFeatures.storage}</p>
+    <p><span class="text-secondary">Chipset : </span>: ${info.data.mainFeatures.chipSet}</p>
+    <p><span class="text-secondary">Memory : </span>: ${info.data.mainFeatures.memory}</p>
+    <p><span class="text-secondary">Display : </span>: ${info.data.mainFeatures.displaySize}</p>
     
     </div>`
-    const details = document.getElementById('more-details');
-    details.classList.add('div');
+
+    // release date information 
+    const releaseDate = document.getElementById('more-details');
+    releaseDate.classList.add('div');
     if (info.data.releaseDate == '') {
-        details.innerHTML = `
-    <h3 class="text-center text-danger">No date Found</h3>
+        releaseDate.innerHTML = `
+    <h3 class="text-center text-danger">Release date not found</h3>
   `
     }
     else {
-        details.innerHTML = `
-    <p>${info.data.releaseDate}</p>
+        releaseDate.innerHTML = `
+    <h3>${info.data.releaseDate}</h3>
   `
     }
-    const othersInformation = document.getElementById('others-info')
+
+//sensors information
+    const sensorsInformation = document.getElementById('others-info')
+    sensorsInformation.textContent = '';
     const information = (info.data.mainFeatures.sensors);
     information.forEach(data => {
         const ul = document.createElement('ul');
-        ul.innerHTML = `<li>${data}</li>`
-        othersInformation.appendChild(ul);
+        ul.innerHTML = `
+        <li>${data}</li>`
+        sensorsInformation.appendChild(ul);
     })
     
 }
