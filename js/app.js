@@ -51,11 +51,11 @@ const displayDetails = info => {
     displayDetails.textContent = '';
     const showDetails = document.getElementById('details');
     showDetails.textContent = '';
-    showDetails.innerHTML = `<div class="col-6">
+    showDetails.innerHTML = `<div class="col-lg-6">
 
 <img src="${info.data.image}">
     </div>
-    <div class="col-6">
+    <div class="col-lg-6">
     <p><span class="text-secondary">Storage : </span> ${info.data.mainFeatures.storage}</p>
     <p><span class="text-secondary">Chipset : </span>: ${info.data.mainFeatures.chipSet}</p>
     <p><span class="text-secondary">Memory : </span>: ${info.data.mainFeatures.memory}</p>
