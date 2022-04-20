@@ -48,12 +48,11 @@ const moreDetails = details => {
         .then(res => res.json())
         .then(data =>displayDetails(data));
 }
+
 const displayDetails = info => {
-    console.log(info.data.mainFeatures.storage);
-    console.log(info.data.mainFeatures.displaySize);
-    console.log(info.data.slug);
-    console.log(info.data.releaseDate);
+    displayDetails.textContent = '';
     const showDetails = document.getElementById('details');
+    showDetails.textContent = '';
     showDetails.innerHTML = `<div class="col-6">
 
 <img src="${info.data.image}">
@@ -63,6 +62,7 @@ const displayDetails = info => {
     <p>Storage: ${info.data.mainFeatures.chipSet}</p>
     <p>Storage: ${info.data.mainFeatures.memory}</p>
     <p>Display: ${info.data.mainFeatures.displaySize}</p>
+    
     </div>`
     const details = document.getElementById('more-details');
     details.classList.add('div');
@@ -76,12 +76,16 @@ const displayDetails = info => {
     <p>${info.data.releaseDate}</p>
   `
     }
+    const othersInformation = document.getElementById('others-info')
+    const information = (info.data.mainFeatures.sensors);
+    information.forEach(data => {
+        const ul = document.createElement('ul');
+        ul.innerHTML = `<li>${data}</li>`
+        othersInformation.appendChild(ul);
+    })
     
 }
 
-const showDetails = () => {
-    
-}
 
 
 
